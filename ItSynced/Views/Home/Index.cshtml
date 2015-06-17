@@ -1,0 +1,67 @@
+﻿@model ItSynced.Controllers.SyncedFilesViewModel
+
+
+<div class="row">
+    
+        <table class="table table-condensed table-bordered">
+            <tr>
+                <th>Directory</th>
+                <th>Files</th>
+            </tr>
+
+            @foreach (var item in Model.Folders)
+            {
+                <tr>
+                    <td class="col-lg-1 vert-align">
+                       
+                        <!-- Name -->
+                        <div class="text-left">
+                            <span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span>  &nbsp;
+                            <strong>
+                                @Html.DisplayFor(modelItem => item.DirectoryName)
+                            </strong>
+                            <small>
+                                (Age: @Html.DisplayFor(modelItem => item.TimeElapsedSinceLastModifiedFile))
+                            </small>
+                         
+
+
+
+
+                            <div class="text-left">
+                                @Html.DisplayFor(modelItem => item.FullPath)
+                            </div>
+                        </div>
+                    </td>
+                 
+
+                    <td>
+                        <!-- Files -->
+                        <table class="table table-condensed table-striped table-bordered">
+                            <tr>
+                                <th>File Name</th>
+                                <th>Last Modified</th>
+                            </tr>
+
+                            @foreach (var file in item.Files.OrderByDescending(x => x.LastModifiedTime))
+                            {
+                                <tr>
+                                    <td>
+                                        @Html.Raw(file.FileName)
+                                    </td>
+                                    <td>
+                                        @Html.Raw(file.LastModifiedTime.ToShortDateString() + " - " + file.LastModifiedTime.ToShortTimeString())
+                                    </td>
+                                </tr>
+                            }
+
+                        </table>
+
+
+                    </td>
+                </tr>
+            }
+
+        </table>
+    </div>
+
