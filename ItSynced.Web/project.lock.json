@@ -15,7 +15,8 @@
       "Microsoft.Framework.Logging >= 1.0.0-beta4",
       "Microsoft.Framework.Logging.Console >= 1.0.0-beta4",
       "Microsoft.VisualStudio.Web.BrowserLink.Loader >= 14.0.0-beta4",
-      "System.Linq >= 4.0.0-beta-22816"
+      "System.Linq >= 4.0.0-beta-22816",
+      "bootstrap >= 3.3.4"
     ],
     "DNX,Version=v4.5.1": [
       "framework/System.Runtime.Caching >= 4.0.0.0"
@@ -23,6 +24,48 @@
     "DNXCore,Version=v5.0": []
   },
   "libraries": {
+    "bootstrap/3.3.4": {
+      "serviceable": false,
+      "sha": "EoMvrleltlW75EILYvVv9XipE50o5BGJ2kALSNxFlY3ZzY2cyuKaXOU9X5snh81ssN0VZymERzYZH9Y81cJWkQ==",
+      "frameworks": {
+        "DNX,Version=v4.5.1": {
+          "dependencies": {
+            "jQuery": "1.9.1"
+          },
+          "frameworkAssemblies": [],
+          "runtimeAssemblies": [],
+          "compileAssemblies": []
+        },
+        "DNXCore,Version=v5.0": {
+          "dependencies": {
+            "jQuery": "1.9.1"
+          },
+          "frameworkAssemblies": [],
+          "runtimeAssemblies": [],
+          "compileAssemblies": []
+        }
+      },
+      "files": [
+        "bootstrap.3.3.4.nupkg",
+        "bootstrap.3.3.4.nupkg.sha512",
+        "bootstrap.nuspec",
+        "content/Icon.png",
+        "content/Content/bootstrap-theme.css",
+        "content/Content/bootstrap-theme.css.map",
+        "content/Content/bootstrap-theme.min.css",
+        "content/Content/bootstrap.css",
+        "content/Content/bootstrap.css.map",
+        "content/Content/bootstrap.min.css",
+        "content/fonts/glyphicons-halflings-regular.eot",
+        "content/fonts/glyphicons-halflings-regular.svg",
+        "content/fonts/glyphicons-halflings-regular.ttf",
+        "content/fonts/glyphicons-halflings-regular.woff",
+        "content/fonts/glyphicons-halflings-regular.woff2",
+        "content/Scripts/bootstrap.js",
+        "content/Scripts/bootstrap.min.js",
+        "content/Scripts/npm.js"
+      ]
+    },
     "EntityFramework/7.0.0-beta4": {
       "serviceable": false,
       "sha": "KTplgz4PBKb33t8O0I5S8yBwkU+l9PTymzoTVav8/FGikck55Amf28EOpOZAqnkGIzCGYD5/k26P7AmVyYyTHw==",
@@ -440,6 +483,37 @@
         "lib/net45/System.Interactive.Async.XML",
         "lib/portable-net45+netcore45+wpa81+wp8+MonoAndroid1+MonoTouch1/System.Interactive.Async.dll",
         "lib/portable-net45+netcore45+wpa81+wp8+MonoAndroid1+MonoTouch1/System.Interactive.Async.XML"
+      ]
+    },
+    "jQuery/1.9.1": {
+      "serviceable": false,
+      "sha": "HiX9icLyiJGgiL5EOIn0d1MBPHVV2M9mzWT4mANdniDNR51RvAFTyKEXEd2+5yQJ4PJ5xePOR61Vjj/omQzYcw==",
+      "frameworks": {
+        "DNX,Version=v4.5.1": {
+          "dependencies": {},
+          "frameworkAssemblies": [],
+          "runtimeAssemblies": [],
+          "compileAssemblies": []
+        },
+        "DNXCore,Version=v5.0": {
+          "dependencies": {},
+          "frameworkAssemblies": [],
+          "runtimeAssemblies": [],
+          "compileAssemblies": []
+        }
+      },
+      "files": [
+        "jQuery.1.9.1.nupkg",
+        "jQuery.1.9.1.nupkg.sha512",
+        "jQuery.nuspec",
+        "Content/Scripts/jquery-1.9.1-vsdoc.js",
+        "Content/Scripts/jquery-1.9.1.js",
+        "Content/Scripts/jquery-1.9.1.min.js",
+        "Content/Scripts/jquery-1.9.1.min.map",
+        "Tools/common.ps1",
+        "Tools/install.ps1",
+        "Tools/jquery-1.9.1.intellisense.js",
+        "Tools/uninstall.ps1"
       ]
     },
     "Microsoft.AspNet.Authentication/1.0.0-beta4": {

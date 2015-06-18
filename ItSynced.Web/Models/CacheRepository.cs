@@ -4,13 +4,14 @@ using System.IO;
 using System.Linq;
 
 using ItSynced.Web.Helpers;
+using Microsoft.Framework.Caching;
 using Microsoft.Framework.Caching.Memory;
 
 namespace ItSynced.Web.Models
 {
     public static class CacheRepository
     {
-        private static readonly MemoryCache _cache = new MemoryCache(new MemoryCacheOptions());
+        private static readonly IMemoryCache _cache = new MemoryCache(new MemoryCacheOptions());
 
         public static object GetItem(string key)
         {
@@ -20,12 +21,13 @@ namespace ItSynced.Web.Models
         private static T GetOrAddExisting<T>(string key, Func<T> valueFactory)
         {
             var newValue = new Lazy<T>(valueFactory);
-
-            T value;
-            var oldValue = _cache.TryGetValue(key, out value);
+         
+            Lazy<T> oldValue;
+            _cache.TryGetValue(key, out oldValue);
             try
             {
-                return (oldValue ?? newValue).Value;
+                _cache.Set(key,(oldValue ?? newValue).Value, new MemoryCacheEntryOptions());
+                return (T) _cache.Get(key);
             }
             catch
             {
