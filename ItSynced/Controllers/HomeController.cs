@@ -21,13 +21,13 @@ namespace ItSynced.Controllers
         [HttpGet]
         public SyncedFilesViewModel GetFolderNames()
         {
-            const string location = @"A:\DEVOPS\";
+            const string location = @"M:\The_Armory\Allegro\Libraries\ltc\wdslibs";
 
             if (HttpRuntime.Cache.Get("files") == null)
             {
                 var directories = new GetAllDirectoryItems().Get(location).ToList();
                 directories = directories.Flatten(x => x.Direcories).Where(j => j.Files.Any()).OrderByDescending(y => y.Files.Max(z => z.LastModifiedTime)).Take(40).ToList();
-                HttpRuntime.Cache.Insert("files",directories, null, Cache.NoAbsoluteExpiration, TimeSpan.FromSeconds(20));
+                HttpRuntime.Cache.Insert("files",directories, null, Cache.NoAbsoluteExpiration, TimeSpan.FromMinutes(10));
             }
             var model = new SyncedFilesViewModel { Folders =  (IEnumerable<DirectoryAndFilesView>)HttpRuntime.Cache.Get("files") };
             return  model;
@@ -50,7 +50,7 @@ namespace ItSynced.Controllers
                         LastModifiedTime = file.LastAccessTime,
                         ParentFolderName = file.Directory.Name,
 
-                    }).ToList().OrderByDescending(thisFile => thisFile.LastModifiedTime),
+                    }).ToList().OrderByDescending(thisFile => thisFile.LastModifiedTime).Take(10),
                     DirectoryName = dir.Name,
                     FullPath = directoryPath + "\\" + dir.Name,
                     Direcories = Get(directoryPath + "\\" + dir.Name),
