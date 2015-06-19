@@ -2,39 +2,22 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-
 using ItSynced.Web.Helpers;
-using Microsoft.Framework.Caching;
 using Microsoft.Framework.Caching.Memory;
 
 namespace ItSynced.Web.Models
 {
     public static class CacheRepository
     {
-        private static readonly IMemoryCache _cache = new MemoryCache(new MemoryCacheOptions());
+        private static readonly MemoryCache _cache = new MemoryCache(new MemoryCacheOptions());
 
         public static object GetItem(string key)
         {
-            return GetOrAddExisting(key, () => InitItem(key));
-        }
-
-        private static T GetOrAddExisting<T>(string key, Func<T> valueFactory)
-        {
-            var newValue = new Lazy<T>(valueFactory);
-         
-            Lazy<T> oldValue;
-            _cache.TryGetValue(key, out oldValue);
-            try
+            return _cache.GetOrSet(key, context =>
             {
-                _cache.Set(key,(oldValue ?? newValue).Value, new MemoryCacheEntryOptions());
-                return (T) _cache.Get(key);
-            }
-            catch
-            {
-                // Handle cached lazy exception by evicting from cache. Thanks to Denis Borovnev for pointing this out!
-                _cache.Remove(key);
-                throw;
-            }
+                context.SetAbsoluteExpiration(TimeSpan.FromSeconds(60));
+                return InitItem(key);
+            });
         }
 
         private static object InitItem(string key)
@@ -52,7 +35,7 @@ namespace ItSynced.Web.Models
                 directories.Flatten(x => x.Direcories)
                     .Where(j => j.Files.Any())
                     .OrderByDescending(y => y.Files.Max(z => z.LastModifiedTime))
-                    .Take(40)
+                    .Take(20)
                     .ToList();
 
 
