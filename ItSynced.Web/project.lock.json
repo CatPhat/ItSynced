@@ -15,6 +15,7 @@
       "Microsoft.Framework.Logging >= 1.0.0-beta4",
       "Microsoft.Framework.Logging.Console >= 1.0.0-beta4",
       "Microsoft.VisualStudio.Web.BrowserLink.Loader >= 14.0.0-beta4",
+      "Microsoft.AspNet.Hosting >= 1.0.0-beta4",
       "System.Linq >= 4.0.0-beta-22816",
       "bootstrap >= 3.3.4",
       "SimpleHelpers.MemoryCache >= 1.1.1",

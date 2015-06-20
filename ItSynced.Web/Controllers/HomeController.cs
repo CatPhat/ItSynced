@@ -5,10 +5,10 @@ namespace ItSynced.Web.Controllers
 {
     public class HomeController : Controller
     {
-        public IActionResult Index()
+        public IActionResult Index(string directory)
         {
             ViewBag.Title = "Home Page";
-            var model = CacheRepository.GetItem(@"A:\DEVOPS");
+            var model = CacheRepository.GetItem(@directory);
 
             return View(model);
         }
