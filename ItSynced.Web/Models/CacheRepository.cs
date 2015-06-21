@@ -60,8 +60,8 @@ namespace ItSynced.Web.Models
                             ParentFolderName = file.Directory.Name
                         }).ToList().OrderByDescending(thisFile => thisFile.LastModifiedTime).Take(10),
                         DirectoryName = dir.Name,
-                        FullPath = directoryPath + "\\" + dir.Name,
-                        Direcories = Get(directoryPath + "\\" + dir.Name)
+                        FullPath = directoryPath + "/" + dir.Name,
+                        Direcories = Get(directoryPath + "/" + dir.Name)
                     }).ToList().OrderByDescending(x => x.LastModifiedTime);
                 }
                 return null;
