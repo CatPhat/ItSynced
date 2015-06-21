@@ -42,7 +42,7 @@ namespace ItSynced.Web
             // Add the following to the request pipeline only in development environment.
             if (env.IsEnvironment("Development"))
             {
-                app.UseBrowserLink();
+                //app.UseBrowserLink(); --causes memory leaks due to AsyncCallback exceptions
                 app.UseErrorPage(ErrorPageOptions.ShowAll);
             }
             else
