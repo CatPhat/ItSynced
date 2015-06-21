@@ -17,7 +17,6 @@
       "Microsoft.VisualStudio.Web.BrowserLink.Loader >= 14.0.0-beta4",
       "System.Linq >= 4.0.0-beta-22816",
       "bootstrap >= 3.3.4",
-      "SimpleHelpers.MemoryCache >= 1.1.1",
       "Kestrel >= 1.0.0-beta4"
     ],
     "DNX,Version=v4.5.1": [],
@@ -4463,58 +4462,6 @@
         "Remotion.Linq.nuspec",
         "lib/portable-net45+win+wpa81+wp80/Remotion.Linq.dll",
         "lib/portable-net45+win+wpa81+wp80/Remotion.Linq.xml"
-      ]
-    },
-    "SimpleHelpers.MemoryCache/1.1.1": {
-      "serviceable": false,
-      "sha": "9NwVVkUZtUqKz5BIYFNxNxHz4vEyIblUpQ6YYtEt4hafGxv4KuQNuJYxQf162vsSHVf/Gf+Erf4Xqi1MWqXm7A==",
-      "frameworks": {
-        "DNX,Version=v4.5.1": {
-          "dependencies": {
-            "SimpleHelpers.NamedLock": "1.0.3"
-          },
-          "frameworkAssemblies": [],
-          "runtimeAssemblies": [],
-          "compileAssemblies": []
-        },
-        "DNXCore,Version=v5.0": {
-          "dependencies": {
-            "SimpleHelpers.NamedLock": "1.0.3"
-          },
-          "frameworkAssemblies": [],
-          "runtimeAssemblies": [],
-          "compileAssemblies": []
-        }
-      },
-      "files": [
-        "SimpleHelpers.MemoryCache.1.1.1.nupkg",
-        "SimpleHelpers.MemoryCache.1.1.1.nupkg.sha512",
-        "SimpleHelpers.MemoryCache.nuspec",
-        "content/SimpleHelpers/MemoryCache.cs.pp"
-      ]
-    },
-    "SimpleHelpers.NamedLock/1.0.3": {
-      "serviceable": false,
-      "sha": "nXXGuIKFyFNyljp9B58SV9rzaBmKTYVYKL8R/SyPmLiTo4I2YpDHski+VDZTxT3Mn7l6Zql2dG84A3rka/RNRg==",
-      "frameworks": {
-        "DNX,Version=v4.5.1": {
-          "dependencies": {},
-          "frameworkAssemblies": [],
-          "runtimeAssemblies": [],
-          "compileAssemblies": []
-        },
-        "DNXCore,Version=v5.0": {
-          "dependencies": {},
-          "frameworkAssemblies": [],
-          "runtimeAssemblies": [],
-          "compileAssemblies": []
-        }
-      },
-      "files": [
-        "SimpleHelpers.NamedLock.1.0.3.nupkg",
-        "SimpleHelpers.NamedLock.1.0.3.nupkg.sha512",
-        "SimpleHelpers.NamedLock.nuspec",
-        "content/SimpleHelpers/NamedLock.cs.pp"
       ]
     },
     "System.AppContext/4.0.0-beta-22816": {
