@@ -4,7 +4,6 @@ using System.IO;
 using System.Linq;
 using ItSynced.Web.Helpers;
 using Microsoft.Framework.Caching.Memory;
-using Microsoft.Framework.Expiration.Interfaces;
 
 namespace ItSynced.Web.Models
 {
@@ -49,48 +48,7 @@ namespace ItSynced.Web.Models
         }
     }
 
-    public class MemoryCacheContext
-    {
-        private readonly MemoryCache _cache;
-        public MemoryCacheContext()
-        {
-            
-        }
-
-        public void SetPriority(CachePreservationPriority priority)
-        {
-            _context.SetPriority(priority);
-        }
-
-        public void SetAbsoluteExpiration(DateTimeOffset absolute)
-        {
-           _context.SetAbsoluteExpiration(absolute);
-        }
-
-        public void SetAbsoluteExpiration(TimeSpan relative)
-        {
-            _context.SetAbsoluteExpiration(relative);
-        }
-
-        public void SetSlidingExpiration(TimeSpan offset)
-        {
-            _context.SetSlidingExpiration(offset);
-        }
-
-        public void AddExpirationTrigger(IExpirationTrigger trigger)
-        {
-            _context.AddExpirationTrigger(trigger);
-        }
-
-        public void RegisterPostEvictionCallback(Action<string, object, EvictionReason, object> callback, object state)
-        {
-            _context.RegisterPostEvictionCallback(callback, state);
-        }
-
-        public string Key => _context.Key;
-
-        public object State => _context.State;
-    }
+  
 
     public class DirectoryCrawler
     {
