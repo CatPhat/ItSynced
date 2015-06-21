@@ -4,40 +4,102 @@ using System.IO;
 using System.Linq;
 using ItSynced.Web.Helpers;
 using Microsoft.Framework.Caching.Memory;
+using Microsoft.Framework.Expiration.Interfaces;
 
 namespace ItSynced.Web.Models
 {
-    public static class CacheRepository
+   
+
+    public class CacheRepository
     {
-        private static readonly MemoryCache _cache = new MemoryCache(new MemoryCacheOptions());
+        private readonly MemoryCache _cache;
 
-        public static object GetItem(string key)
+        public CacheRepository()
         {
-            return _cache.GetOrSet(key, context =>
+            _cache = new MemoryCache(new MemoryCacheOptions());
+        }
+
+        public object GetItem(string directory)
+        {
+            if (directory == null)
             {
-                context.SetAbsoluteExpiration(TimeSpan.FromSeconds(60));
-                return InitItem(key);
+                directory = "." + Path.DirectorySeparatorChar;
+            }
+
+            object cachedObject;
+            if (_cache.TryGetValue(directory, out cachedObject))
+            {
+               return cachedObject;
+            }
+
+            _cache.Set(directory, context =>
+            {
+                context.SetAbsoluteExpiration(TimeSpan.FromSeconds(10));
+               // context.RegisterPostEvictionCallback((echoKey, value, reason, substate) => { GetItem(directory); }, state: null);
+                return new Lazy<object>(() => InitItem(directory)).Value;
             });
+
+            return GetItem(directory);
+
         }
 
-        private static object InitItem(string key)
+        private object InitItem(string directory)
         {
-            return new DirectoryCrawler().GetFolderNames(key);
+            return new DirectoryCrawler().GetFolderNames(directory);
         }
+    }
+
+    public class MemoryCacheContext
+    {
+        private readonly MemoryCache _cache;
+        public MemoryCacheContext()
+        {
+            
+        }
+
+        public void SetPriority(CachePreservationPriority priority)
+        {
+            _context.SetPriority(priority);
+        }
+
+        public void SetAbsoluteExpiration(DateTimeOffset absolute)
+        {
+           _context.SetAbsoluteExpiration(absolute);
+        }
+
+        public void SetAbsoluteExpiration(TimeSpan relative)
+        {
+            _context.SetAbsoluteExpiration(relative);
+        }
+
+        public void SetSlidingExpiration(TimeSpan offset)
+        {
+            _context.SetSlidingExpiration(offset);
+        }
+
+        public void AddExpirationTrigger(IExpirationTrigger trigger)
+        {
+            _context.AddExpirationTrigger(trigger);
+        }
+
+        public void RegisterPostEvictionCallback(Action<string, object, EvictionReason, object> callback, object state)
+        {
+            _context.RegisterPostEvictionCallback(callback, state);
+        }
+
+        public string Key => _context.Key;
+
+        public object State => _context.State;
     }
 
     public class DirectoryCrawler
     {
         public SyncedFilesViewModel GetFolderNames(string path)
         {
-            var directories = new GetAllDirectoryItems().Get(path).ToList();
-            directories =
-                directories.Flatten(x => x.Direcories)
-                    .Where(j => j.Files.Any())
-                    .OrderByDescending(y => y.Files.Max(z => z.LastModifiedTime))
-                    .Take(20)
-                    .ToList();
-
+            var directories = new GetAllDirectoryItems().Get(path).Flatten(x => x.Direcories)
+                .Where(j => j.Files.Any())
+                .OrderByDescending(y => y.Files.Max(z => z.LastModifiedTime))
+                .Take(20).ToList();
 
             var model = new SyncedFilesViewModel {Folders = directories};
             return model;
@@ -60,8 +122,8 @@ namespace ItSynced.Web.Models
                             ParentFolderName = file.Directory.Name
                         }).ToList().OrderByDescending(thisFile => thisFile.LastModifiedTime).Take(10),
                         DirectoryName = dir.Name,
-                        FullPath = directoryPath + "/" + dir.Name,
-                        Direcories = Get(directoryPath + "/" + dir.Name)
+                        FullPath = Path.Combine(directoryPath, dir.Name),
+                        Direcories = Get(Path.Combine(directoryPath, dir.Name))
                     }).ToList().OrderByDescending(x => x.LastModifiedTime);
                 }
                 return null;
