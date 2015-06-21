@@ -1,20 +1,18 @@
-﻿using ItSynced.Web.Models;
+﻿using System.Threading.Tasks;
+using ItSynced.Web.Models;
 using Microsoft.AspNet.Mvc;
 
 namespace ItSynced.Web.Controllers
 {
     public class HomeController : Controller
     {
-        public IActionResult Index(string directory = null)
+      
+        public async Task<IActionResult> Index(string directory)
         {
-            if (directory == null)
-            {
-                directory = "/";
-            }
             ViewBag.Title = "Home Page";
-            var model = CacheRepository.GetItem(@directory);
+            var model = new CacheRepository().GetItem(@directory);
 
-            return View(model);
+            return View(await Task.FromResult(model));
         }
 
         public IActionResult Error()
