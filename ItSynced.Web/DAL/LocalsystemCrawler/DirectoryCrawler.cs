@@ -1,55 +1,11 @@
-﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using ItSynced.Web.Helpers;
-using Microsoft.Framework.Caching.Memory;
+using ItSynced.Web.Models;
 
-namespace ItSynced.Web.Models
+namespace ItSynced.Web.DAL.LocalsystemCrawler
 {
-   
-
-    public class CacheRepository
-    {
-        private readonly MemoryCache _cache;
-
-        public CacheRepository()
-        {
-            _cache = new MemoryCache(new MemoryCacheOptions());
-        }
-
-        public object GetItem(string directory)
-        {
-            if (directory == null)
-            {
-                directory = "." + Path.DirectorySeparatorChar;
-            }
-
-            object cachedObject;
-            if (_cache.TryGetValue(directory, out cachedObject))
-            {
-               return cachedObject;
-            }
-
-            _cache.Set(directory, context =>
-            {
-                context.SetAbsoluteExpiration(TimeSpan.FromSeconds(10));
-               // context.RegisterPostEvictionCallback((echoKey, value, reason, substate) => { GetItem(directory); }, state: null);
-                return new Lazy<object>(() => InitItem(directory)).Value;
-            });
-
-            return GetItem(directory);
-
-        }
-
-        private object InitItem(string directory)
-        {
-            return new DirectoryCrawler().GetFolderNames(directory);
-        }
-    }
-
-  
-
     public class DirectoryCrawler
     {
         public SyncedFilesViewModel GetFolderNames(string path)
