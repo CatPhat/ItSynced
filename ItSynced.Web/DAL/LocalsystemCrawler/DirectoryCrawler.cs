@@ -31,7 +31,7 @@ namespace ItSynced.Web.DAL.LocalsystemCrawler
                         {
                             FileName = file.Name,
                             LastModifiedDateTime = file.LastAccessTime,
-                            ParentDirectoryName = file.Directory.Name
+                          //  ParentDirectory = ,
                         }).ToList().OrderByDescending(thisFile => thisFile.LastModifiedDateTime).Take(10),
                         DirectoryName = dir.Name,
                         FullPath = Path.Combine(directoryPath, dir.Name),

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
+using ItSynced.Web.DAL.Entities.Commands;
 using ItSynced.Web.DAL.EntityFramework;
 using ItSynced.Web.DAL.LocalsystemCrawler;
 using ItSynced.Web.DAL.MemoryCache;
@@ -13,11 +14,11 @@ namespace ItSynced.Web.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ItSyncedContext _context;
+        private readonly IServiceProvider _service;
        
-        public HomeController(ItSyncedContext context)
+        public HomeController(IServiceProvider service)
         {
-            _context = context;
+            _service = service;
         }
       
         public async Task<IActionResult> Index(string directory)
@@ -27,20 +28,11 @@ namespace ItSynced.Web.Controllers
             {
                 directory = "." + Path.DirectorySeparatorChar;
             }
-            using (var db = _context)
-            {
-                await db.Database.EnsureCreatedAsync();
-            }
-
+         
             List<Directory> directories = new List<Directory>();
-            using (var db = _context)
-            {
-                var directoriesToAdd = new DirectoryCrawler().GetDirectories(directory);
-                db.AddRange(directoriesToAdd);
-                await db.SaveChangesAsync();
-                directories.AddRange(db.Directories);
-            }
-            
+            var command = (CreateDirectories) _service.GetService(typeof (CreateDirectories));
+            await command.Create(new DirectoryCrawler().GetDirectories(directory));
+
             return View(directories);
         }
 

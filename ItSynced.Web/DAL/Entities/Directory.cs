@@ -7,7 +7,7 @@ namespace ItSynced.Web.DAL.Entities
     {
         public int DirectoryId { get; set; }
         public string DirectoryName { get; set; }
-        public string ParentDirectoryName { get; set; }
+        public virtual Directory ParentDirectory { get; set; }
         public string FullPath { get; set; }
         public DateTime LastModifiedDateTime { get; set; }
         public virtual IEnumerable<File> Files { get; set; } 

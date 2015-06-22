@@ -1,4 +1,5 @@
-﻿using ItSynced.Web.DAL.EntityFramework;
+﻿using ItSynced.Web.DAL.Entities.Commands;
+using ItSynced.Web.DAL.EntityFramework;
 using Microsoft.AspNet.Builder;
 using Microsoft.AspNet.Diagnostics;
 using Microsoft.AspNet.Hosting;
@@ -30,20 +31,22 @@ namespace ItSynced.Web
 
             services.AddEntityFramework()
                 .AddSqlServer()
-                .AddDbContext<ItSyncedContext>(
-                    options =>
-                        options.UseSqlServer(
-                            @"Server=SHIVA9;Database=ItSyncedDatabase;Trusted_Connection=True;MultipleActiveResultSets=true"));
+                .AddDbContext<ItSyncedContext>();
 
+            services.AddTransient<CreateDirectories>();
             // Uncomment the following line to add Web API services which makes it easier to port Web API 2 controllers.
             // You will also need to add the Microsoft.AspNet.Mvc.WebApiCompatShim package to the 'dependencies' section of project.json.
             // services.AddWebApiConventions();
         }
 
         // Configure is called after ConfigureServices is called.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerfactory)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerfactory, ItSyncedContext dbContext)
         {
-            // Configure the HTTP request pipeline.
+
+#if DEBUG
+            dbContext.Database.EnsureDeleted();
+            dbContext.Database.EnsureCreated();
+#endif
 
             // Add the console logger.
             loggerfactory.AddConsole();
