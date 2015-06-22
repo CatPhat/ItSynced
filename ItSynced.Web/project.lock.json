@@ -16,6 +16,7 @@
       "Microsoft.Framework.Logging.Console >= 1.0.0-beta4",
       "System.Linq >= 4.0.0-beta-22816",
       "bootstrap >= 3.3.4",
+      "EntityFramework.SqlServer >= 7.0.0-beta4",
       "Kestrel >= 1.0.0-beta4"
     ],
     "DNX,Version=v4.5.1": [],

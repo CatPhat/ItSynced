@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
+using ItSynced.Web.DAL.Entities;
 
 namespace ItSynced.Web.Models
 {
-    public class DirectoryAndFilesView
+    public class DirectoriesAndFilesView
     {
         public string DirectoryName { get; set; }
         public string LastModifiedTime { get; set; }
@@ -13,14 +13,14 @@ namespace ItSynced.Web.Models
         public int ItemCount { get; set; }
         public string FullPath { get; set; }
         public string ParentDirectory { get; set; }
-        public IEnumerable<FileView> Files { get; set; }
-        public IEnumerable<DirectoryAndFilesView> Direcories { get; set; }
+        public IEnumerable<File> Files { get; set; }
+        public IEnumerable<Directory> Directories { get; set; }
 
         public DateTime RecentModifiedFileTime
         {
             get
             {
-                return Files.OrderByDescending(y => y.LastModifiedTime).First().LastModifiedTime;
+                return Files.OrderByDescending(y => y.LastModifiedDateTime).First().LastModifiedDateTime;
             }
         }
 

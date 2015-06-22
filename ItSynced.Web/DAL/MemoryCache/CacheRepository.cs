@@ -16,11 +16,6 @@ namespace ItSynced.Web.DAL.MemoryCache
 
         public object GetItem(string directory)
         {
-            if (directory == null)
-            {
-                directory = "." + Path.DirectorySeparatorChar;
-            }
-
             object cachedObject;
             if (_cache.TryGetValue(directory, out cachedObject))
             {
@@ -38,7 +33,7 @@ namespace ItSynced.Web.DAL.MemoryCache
 
         private object InitItem(string directory)
         {
-            return new DirectoryCrawler().GetFolderNames(directory);
+            return new DirectoryCrawler().GetDirectories(directory);
         }
     }
 }

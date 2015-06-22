@@ -4,6 +4,6 @@ namespace ItSynced.Web.Models
 {
     public class SyncedFilesViewModel
     {
-        public IEnumerable<DirectoryAndFilesView> Folders { get; set; }
+        public IEnumerable<DirectoriesAndFilesView> DirectoryAndFilesViews { get; set; }
     }
 }

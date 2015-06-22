@@ -1,6 +1,8 @@
-﻿using Microsoft.AspNet.Builder;
+﻿using ItSynced.Web.DAL.EntityFramework;
+using Microsoft.AspNet.Builder;
 using Microsoft.AspNet.Diagnostics;
 using Microsoft.AspNet.Hosting;
+using Microsoft.Data.Entity;
 using Microsoft.Framework.ConfigurationModel;
 using Microsoft.Framework.DependencyInjection;
 using Microsoft.Framework.Logging;
@@ -25,6 +27,13 @@ namespace ItSynced.Web
 
             // Add MVC services to the services container.
             services.AddMvc();
+
+            services.AddEntityFramework()
+                .AddSqlServer()
+                .AddDbContext<ItSyncedContext>(
+                    options =>
+                        options.UseSqlServer(
+                            @"Server=SHIVA9;Database=ItSyncedDatabase;Trusted_Connection=True;MultipleActiveResultSets=true"));
 
             // Uncomment the following line to add Web API services which makes it easier to port Web API 2 controllers.
             // You will also need to add the Microsoft.AspNet.Mvc.WebApiCompatShim package to the 'dependencies' section of project.json.

@@ -1,7 +1,7 @@
 ﻿@{
     ViewBag.Title = "Home Page";
 }
-@model ItSynced.Web.Models.SyncedFilesViewModel
+@model  List<ItSynced.Web.DAL.Entities.Directory>
 <div class="row">
 
     <table class="table table-condensed table-bordered">
@@ -10,7 +10,7 @@
             <th>Files <span><small>(Top 5 LastModified)</small></span></th>
         </tr>
 
-        @foreach (var item in Model.Folders)
+        @foreach (var item in Model)
             {
             <tr>
                 <td class="vert-align col-xs-4">
@@ -32,7 +32,7 @@
                         <div class="form-group form-group-sm">
                             <label class="col-sm-2 control-label" for="formGroupInputSmall"><span class="glyphicon glyphicon-time" aria-hidden="true"></span>  &nbsp;</label>
                             <div class="col-sm-10">
-                                <input class="form-control" type="text" id="formGroupInputSmall" value="@Html.DisplayFor(modelItem => item.TimeElapsedSinceLastModifiedFile)" readonly>
+                                <input class="form-control" type="text" id="formGroupInputSmall" value="@Html.DisplayFor(modelItem => item.LastModifiedDateTime)" readonly>
 
                             </div>
                         </div>
@@ -46,14 +46,14 @@
                             <th>Last Modified</th>
                         </tr>
 
-                        @foreach (var file in item.Files.OrderByDescending(x => x.LastModifiedTime))
+                        @foreach (var file in item.Files.OrderByDescending(x => x.LastModifiedDateTime))
                         {
                             <tr>
                                 <td>
                                     @Html.Raw(file.FileName)
                                 </td>
                                 <td>
-                                    @Html.Raw(file.LastModifiedTime.ToShortDateString() + " - " + file.LastModifiedTime.ToShortTimeString())
+                                    @Html.Raw(file.LastModifiedDateTime.ToShortDateString() + " - " + file.LastModifiedDateTime.ToShortTimeString())
                                 </td>
                             </tr>
                         }
