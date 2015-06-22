@@ -1,5 +1,5 @@
 ﻿using System.Threading.Tasks;
-using ItSynced.Web.Models;
+using ItSynced.Web.DAL.MemoryCache;
 using Microsoft.AspNet.Mvc;
 
 namespace ItSynced.Web.Controllers
