@@ -13,7 +13,7 @@ namespace ItSynced.Web.DAL.EntityFramework
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlServer(
-                @"Server=SHIVA9;Database=ItSyncedDatabase;Trusted_Connection=True;MultipleActiveResultSets=true");
+                @"Server=GANESH;Database=ItSyncedDatabase;Trusted_Connection=True;MultipleActiveResultSets=true");
         }
 
         protected override void OnModelCreating(ModelBuilder builder)
@@ -21,7 +21,7 @@ namespace ItSynced.Web.DAL.EntityFramework
             builder.Entity<Directory>().Key(x => x.DirectoryId);
             builder.Entity<File>().Key(x => x.FileId);
             builder.Entity<Directory>()
-                .Collection(x => x.Directories).InverseReference(y => y.ParentDirectory).ForeignKey(z => z.DirectoryId);
+                .Collection(x => x.Directories).InverseReference(y => y.ParentDirectory);
               
             builder.Entity<Directory>()
                 .Collection(x => x.Files)
