@@ -1,7 +1,16 @@
 {
   "AppSettings": {
     "SiteTitle": "ItSynced.Web"
-  }
+  },
 
- 
+   "Data": {
+    "DefaultConnection": {
+      "ConnectionString": "Server=GANESH\\MDEVSQLSERVERDatabase=ItSyncedDatabase;User Id=devuser;password=password123"
+    }
+  },
+  "EntityFramework": {
+    "ApplicationDbContext": {
+      "ConnectionStringKey": "Data:DefaultConnection:ConnectionString"
+    }
+  }
 }

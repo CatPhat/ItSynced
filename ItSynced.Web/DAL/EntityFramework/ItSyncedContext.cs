@@ -10,12 +10,7 @@ namespace ItSynced.Web.DAL.EntityFramework
         public DbSet<File> Files { get; set; }
         public DbSet<ModificationEntry> ModificationEntries { get; set; }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder.UseSqlServer(
-                @"Server=GANESH/MDEVSQLSERVERDatabase=ItSyncedDatabase;User Id=devuser;password=password123");
-        }
-
+      
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder.Entity<Directory>().Key(x => x.DirectoryId);

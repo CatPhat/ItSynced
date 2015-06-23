@@ -29,9 +29,13 @@ namespace ItSynced.Web
             // Add MVC services to the services container.
             services.AddMvc();
 
+            var connectionString = Configuration.Get("Data:DefaultConnection:ConnectionString");
             services.AddEntityFramework()
                 .AddSqlServer()
-                .AddDbContext<ItSyncedContext>();
+                .AddDbContext<ItSyncedContext>(options =>
+                {
+                    options.UseSqlServer(connectionString);
+                });
 
             services.AddTransient<CreateDirectories>();
             // Uncomment the following line to add Web API services which makes it easier to port Web API 2 controllers.
