@@ -13,7 +13,7 @@ namespace ItSynced.Web.DAL.EntityFramework
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlServer(
-                @"Provider=SQLOLEDB;Server=GANESH\MDEVSQLSERVER;Database=ItSyncedDatabase;User Id=devuser;password=password123;Integrated Security=False");
+                @"Server=GANESH;Database=ItSyncedDatabase;User Id=devuser;password=password123");
         }
 
         protected override void OnModelCreating(ModelBuilder builder)
