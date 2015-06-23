@@ -1,16 +1,7 @@
 {
   "AppSettings": {
     "SiteTitle": "ItSynced.Web"
-  },
+  }
 
-     "Data": {
-        "DefaultConnection": { 
-            "ConnectionString": "Server=SHIVA9;Database=ItSyncedDatabase;Trusted_Connection=True;MultipleActiveResultSets=true"
-        }
-    },
-    "EntityFramework": {
-        "MoviesAppContext": {
-            "ConnectionStringKey": "Data:DefaultConnection:ConnectionString"
-        }
-    }
+ 
 }
