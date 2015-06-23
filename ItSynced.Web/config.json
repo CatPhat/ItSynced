@@ -5,7 +5,7 @@
 
    "Data": {
     "DefaultConnection": {
-      "ConnectionString": "Server=GANESH\\MDEVSQLSERVER=ItSyncedDatabase;User Id=devuser;password=password123"
+      "ConnectionString": "Server=GANESH\\MDEVSQLSERVER;Database=ItSyncedDatabase;User Id=devuser;password=password123"
     }
   },
   "EntityFramework": {
