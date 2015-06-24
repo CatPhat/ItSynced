@@ -29,13 +29,9 @@ namespace ItSynced.Web
             // Add MVC services to the services container.
             services.AddMvc();
 
-            var connectionString = Configuration.Get("Data:DefaultConnection:ConnectionString");
             services.AddEntityFramework()
-                .AddSqlServer()
-                .AddDbContext<ItSyncedContext>(options =>
-                {
-                    options.UseSqlServer(connectionString);
-                });
+                .AddInMemoryStore()
+                .AddDbContext<ItSyncedContext>();
 
             services.AddTransient<CreateDirectories>();
             // Uncomment the following line to add Web API services which makes it easier to port Web API 2 controllers.
@@ -46,12 +42,12 @@ namespace ItSynced.Web
         // Configure is called after ConfigureServices is called.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerfactory, ItSyncedContext dbContext)
         {
-
+          
 #if DEBUG
             dbContext.Database.EnsureDeleted();
             dbContext.Database.EnsureCreated();
 #endif
-
+            
             // Add the console logger.
             loggerfactory.AddConsole();
 
