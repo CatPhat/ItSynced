@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 using ItSynced.Web.DAL.Entities.Commands;
+using ItSynced.Web.DAL.Entities.Queries;
 using ItSynced.Web.DAL.EntityFramework;
 using ItSynced.Web.DAL.LocalsystemCrawler;
 using ItSynced.Web.DAL.MemoryCache;
@@ -30,9 +31,11 @@ namespace ItSynced.Web.Controllers
             }
          
             List<Directory> directories = new List<Directory>();
-            var command = (CreateDirectories) _service.GetService(typeof (CreateDirectories));
-            await command.Create(new DirectoryCrawler().GetDirectories(directory));
+           var command = (CreateDirectories) _service.GetService(typeof (CreateDirectories));
+           await command.Create(new DirectoryCrawler().GetDirectories(directory));
 
+            var query = (GetDirectories) _service.GetService(typeof (GetDirectories));
+            directories = await query.GetAsync();
             return View(directories);
         }
 

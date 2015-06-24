@@ -38,30 +38,35 @@
                         </div>
                     </form>
                 </td>
+                @{
+                    if (item.Files != null)
+                    {
+                        <td class="col-xs-8">
+                            <table class="table table-condensed table-striped table-bordered">
+                                <tr>
+                                    <th>File Name</th>
+                                    <th>Last Modified</th>
+                                </tr>
 
-                <td class="col-xs-8">
-                    <table class="table table-condensed table-striped table-bordered">
-                        <tr>
-                            <th>File Name</th>
-                            <th>Last Modified</th>
-                        </tr>
+                                @foreach (var file in item.Files.OrderByDescending(x => x.LastModifiedDateTime))
+                                {
+                                    <tr>
+                                        <td>
+                                            @Html.Raw(file.FileName)
+                                        </td>
+                                        <td>
+                                            @Html.Raw(file.LastModifiedDateTime.ToShortDateString() + " - " + file.LastModifiedDateTime.ToShortTimeString())
+                                        </td>
+                                    </tr>
+                                }
 
-                        @foreach (var file in item.Files.OrderByDescending(x => x.LastModifiedDateTime))
-                        {
-                            <tr>
-                                <td>
-                                    @Html.Raw(file.FileName)
-                                </td>
-                                <td>
-                                    @Html.Raw(file.LastModifiedDateTime.ToShortDateString() + " - " + file.LastModifiedDateTime.ToShortTimeString())
-                                </td>
-                            </tr>
-                        }
-
-                    </table>
+                            </table>
 
 
-                </td>
+                        </td>
+                    }
+                }
+        
             </tr>
         }
 

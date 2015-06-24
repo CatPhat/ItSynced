@@ -13,15 +13,11 @@ namespace ItSynced.Web.DAL.EntityFramework
       
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            builder.Entity<Directory>().Key(x => x.DirectoryId);
-            builder.Entity<File>().Key(x => x.FileId);
-            builder.Entity<Directory>()
-                .Collection(x => x.Directories).InverseReference(y => y.ParentDirectory);
-              
-            builder.Entity<Directory>()
-                .Collection(x => x.Files)
-                .InverseReference(y => y.ParentDirectory)
-                .ForeignKey(z => z.FileId);
+            builder.Entity<Directory>().Key(x => x.Id);
+            builder.Entity<File>().Key(x => x.Id);
+
+            builder.Entity<Directory>().Collection(x => x.Directories).InverseReference(y => y.ParentDirectory);
+            builder.Entity<Directory>().Collection(x => x.Files).InverseReference(y => y.ParentDirectory);
         }
     }
 }

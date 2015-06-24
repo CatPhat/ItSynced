@@ -1,4 +1,5 @@
 ﻿using ItSynced.Web.DAL.Entities.Commands;
+using ItSynced.Web.DAL.Entities.Queries;
 using ItSynced.Web.DAL.EntityFramework;
 using Microsoft.AspNet.Builder;
 using Microsoft.AspNet.Diagnostics;
@@ -31,9 +32,10 @@ namespace ItSynced.Web
 
             services.AddEntityFramework()
                 .AddInMemoryStore()
-                .AddDbContext<ItSyncedContext>();
+                .AddDbContext<ItSyncedContext>(options => options.UseInMemoryStore(true));
 
-            services.AddTransient<CreateDirectories>();
+            services.AddScoped<CreateDirectories>();
+            services.AddScoped<GetDirectories>();
             // Uncomment the following line to add Web API services which makes it easier to port Web API 2 controllers.
             // You will also need to add the Microsoft.AspNet.Mvc.WebApiCompatShim package to the 'dependencies' section of project.json.
             // services.AddWebApiConventions();
@@ -44,8 +46,8 @@ namespace ItSynced.Web
         {
           
 #if DEBUG
-            dbContext.Database.EnsureDeleted();
-            dbContext.Database.EnsureCreated();
+        //    dbContext.Database.EnsureDeleted();
+        //    dbContext.Database.EnsureCreated();
 #endif
             
             // Add the console logger.

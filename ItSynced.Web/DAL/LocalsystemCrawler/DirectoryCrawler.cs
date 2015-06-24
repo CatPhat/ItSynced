@@ -11,35 +11,40 @@ namespace ItSynced.Web.DAL.LocalsystemCrawler
     {
         public List<Directory> GetDirectories(string path)
         {
-            var directories = new GetAllDirectoryItems().Get(path).Flatten(x => x.Directories)
-                .Where(j => j.Files.Any())
-                .OrderByDescending(y => y.Files.Max(z => z.LastModifiedDateTime))
-                .Take(20).ToList();
+           
+            var directories = new List<Directory>();
+            var systemDirectories = new Crawler().Get(path);
+            foreach (var directory in systemDirectories.Flatten(x => x.Directories))
+            {
+                directories.Add(directory);
+            }
             return directories;
         }
 
-        public class GetAllDirectoryItems
+      
+    }
+
+    public class Crawler
+    {
+        public List<Directory> Get(string directoryPath)
         {
-            public List<Directory> Get(string directoryPath)
+            var directoriesToReturn = new List<Directory>();
+            var directories = new DirectoryInfo(directoryPath).GetDirectories();
+            foreach (var directory in directories)
             {
-                var directories = new DirectoryInfo(directoryPath).GetDirectories();
-                if (directories.Any())
+                directoriesToReturn.Add(new Directory
                 {
-                    return directories.Select(dir => new Directory
+                    Directories = Get(directory.FullName),
+                    DirectoryName = directory.Name,
+                    Files = directory.GetFiles().Select(x => new File
                     {
-                        Files = dir.GetFiles().Select(file => new File
-                        {
-                            FileName = file.Name,
-                            LastModifiedDateTime = file.LastAccessTime,
-                          //  ParentDirectory = ,
-                        }).ToList().OrderByDescending(thisFile => thisFile.LastModifiedDateTime).Take(10),
-                        DirectoryName = dir.Name,
-                        FullPath = Path.Combine(directoryPath, dir.Name),
-                        Directories = Get(Path.Combine(directoryPath, dir.Name))
-                    }).OrderByDescending(x => x.LastModifiedDateTime).ToList();
-                }
-                return null;
+                        FileName = x.Name,
+                        LastModifiedDateTime = x.LastAccessTime
+                    }).ToList()
+                });
             }
+
+            return directoriesToReturn;
         }
     }
 }

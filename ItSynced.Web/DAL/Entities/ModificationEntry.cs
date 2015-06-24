@@ -5,9 +5,8 @@ using System.Threading.Tasks;
 
 namespace ItSynced.Web.DAL.Entities
 {
-    public class ModificationEntry
+    public class ModificationEntry : EntityWithId
     {
-        public int ModificationEntryId { get; set; }
         public int FileId { get; set; }
         public int DirectoryId { get; set; }
         public DateTime ModificationDateTime { get; set; }
