@@ -39,7 +39,9 @@ namespace ItSynced.Web.DAL.LocalsystemCrawler
                     Files = directory.GetFiles().Select(x => new File
                     {
                         FileName = x.Name,
-                        LastModifiedDateTime = x.LastAccessTime
+                        LastModifiedDateTime = x.LastAccessTime,
+                        DirectoryPath = x.DirectoryName
+                        
                     }).ToList()
                 });
             }

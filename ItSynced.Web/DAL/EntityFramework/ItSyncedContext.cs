@@ -15,7 +15,10 @@ namespace ItSynced.Web.DAL.EntityFramework
         {
             builder.Entity<Directory>().Key(x => x.Id);
             builder.Entity<File>().Key(x => x.Id);
+            builder.Entity<ModificationEntry>().Key(x => x.Id);
+            builder.Entity<TFLog>().Key(x => x.Id);
 
+            builder.Entity<File>().Collection(x => x.ModificationEntries).InverseReference(y => y.File);
             builder.Entity<Directory>().Collection(x => x.Directories).InverseReference(y => y.ParentDirectory);
             builder.Entity<Directory>().Collection(x => x.Files).InverseReference(y => y.ParentDirectory);
         }
