@@ -8,6 +8,7 @@ using Microsoft.Data.Entity;
 using Microsoft.Framework.ConfigurationModel;
 using Microsoft.Framework.DependencyInjection;
 using Microsoft.Framework.Logging;
+using System;
 
 namespace ItSynced.Web
 {
@@ -30,12 +31,28 @@ namespace ItSynced.Web
             // Add MVC services to the services container.
             services.AddMvc();
 
-            services.AddEntityFramework()
-                .AddInMemoryStore()
-                .AddDbContext<ItSyncedContext>(options => options.UseInMemoryStore(true));
+
+            //Sql client not available on mono
+            var useInMemoryStore = Type.GetType("Mono.Runtime") != null;
+
+            if (useInMemoryStore)
+            {
+                services.AddEntityFramework()
+                        .AddInMemoryStore()
+                        .AddDbContext<ItSyncedContext>(options => options.UseInMemoryStore(true));
+            }
+            else
+            {
+                services.AddEntityFramework()
+                        .AddSqlServer()
+                        .AddDbContext<ItSyncedContext>(options =>
+                            options.UseSqlServer(Configuration.Get("Data:DefaultConnection:ConnectionString")));
+            }
+
+        
 
             services.AddScoped<CreateDirectories>();
-            services.AddScoped<GetDirectories>();
+            services.AddScoped<DirectoriesBy>();
             // Uncomment the following line to add Web API services which makes it easier to port Web API 2 controllers.
             // You will also need to add the Microsoft.AspNet.Mvc.WebApiCompatShim package to the 'dependencies' section of project.json.
             // services.AddWebApiConventions();
@@ -46,8 +63,8 @@ namespace ItSynced.Web
         {
           
 #if DEBUG
-        //    dbContext.Database.EnsureDeleted();
-        //    dbContext.Database.EnsureCreated();
+            dbContext.Database.EnsureDeleted();
+            dbContext.Database.EnsureCreated();
 #endif
             
             // Add the console logger.
