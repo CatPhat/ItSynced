@@ -11,6 +11,6 @@ namespace ItSynced.Web.DAL.Entities
         public DateTime LastModifiedDateTime { get; set; }
         public virtual ICollection<File> Files { get; set; } 
         public virtual ICollection<Directory> Directories { get; set; } 
-        public virtual ICollection<ModificationEntry> ModificationEntries { get; set; }
+       
     }
 }

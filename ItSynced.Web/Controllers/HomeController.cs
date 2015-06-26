@@ -34,7 +34,7 @@ namespace ItSynced.Web.Controllers
            var command = (CreateDirectories) _service.GetService(typeof (CreateDirectories));
            await command.Create(new DirectoryCrawler().GetDirectories(directory));
 
-            var query = (DirectoriesBy) _service.GetService(typeof (DirectoriesBy));
+          
           //  directories = await query.GetAsync();
             return View(directories);
         }
