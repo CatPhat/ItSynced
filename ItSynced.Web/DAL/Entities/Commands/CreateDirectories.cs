@@ -24,9 +24,33 @@ namespace ItSynced.Web.DAL.Entities.Commands
                     File = file,
                     ModificationDateTime = file.LastModifiedDateTime
                 });
-                _dbContext.Add(file);
+                var existingFile = await _dbContext.Files.SingleOrDefaultAsync(x => file.FullPath == x.FullPath);
+                if (existingFile == null)
+                {
+                    _dbContext.Add(file);
+                }
+                else
+                {
+                    existingFile = file;
+                    _dbContext.Update(existingFile);
+                }
+               
             }
-            _dbContext.AddRange(directories);
+            foreach (var directory in directories)
+            {
+                var existingDirectory =
+                    await _dbContext.Directories.SingleOrDefaultAsync(x => x.CompositeKey == directory.CompositeKey);
+
+                if (existingDirectory == null)
+                {
+                    _dbContext.Add(directory);
+                }
+                else
+                {
+                    existingDirectory = directory;
+                    _dbContext.Update(existingDirectory);
+                }
+            }
             await _dbContext.SaveChangesAsync();
         }
     }

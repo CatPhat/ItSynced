@@ -13,14 +13,15 @@ namespace ItSynced.Web.DAL.Entities
 
         [Required]
         public string DirectoryName { get; set; }
-            
- 
-        
+
+        [Required]
+        public string CompositeKey => FullPath + DirectoryName;
+
+     
         [Required]
         public string FullPath { get; set; }
         public DateTime LastModifiedDateTime { get; set; }
         public virtual ICollection<File> Files { get; set; }
-
         public virtual Directory ParentDirectory { get; set; } 
         public virtual ICollection<Directory> Directories { get; set; } 
        

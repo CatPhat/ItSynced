@@ -14,24 +14,23 @@ namespace ItSynced.Web.DAL.EntityFramework
       
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            builder.Entity<Directory>().Key(x => x.Id);
-            //builder.Entity<Directory>().Key(x => x.FullPath);
-
-
+            //builder.Entity<Directory>().Key(x => x.Id);
             builder.Entity<Directory>()
-                .Collection(x => x.Directories)
-                .InverseReference(y => y.ParentDirectory);
-                
-               
-               
+                .Collection(d => d.Directories)
+                .InverseReference(d => d.ParentDirectory);
             
-                
-              
           
 
-          //  builder.Entity<Directory>().Property(x => x.Id).ForSqlServer(y => y.UseSequence());
 
-            builder.Entity<File>().Key(x => x.FullPath);
+            //  builder.Entity<Directory>().Property(x => x.Id).ForSqlServer(y => y.UseSequence());
+
+
+
+            builder.Entity<File>().Key(x => new
+            {
+                x.FullPath,
+                x.FileName
+            });
           
 
             //builder.Entity<File>().Property(x => x.Id).GenerateValueOnAdd();
