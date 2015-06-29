@@ -17,25 +17,16 @@ namespace ItSynced.Web.DAL.Entities.Commands
 
         public async Task Create(IList<Directory> directories)
         {
-           
-            foreach (var dir in directories)
+            foreach (var file in directories.SelectMany(dir => dir.Files))
             {
-                var directory =
-                    await
-                        _dbContext.Directories.FirstOrDefaultAsync(
-                            x => x.DirectoryName == dir.DirectoryName && x.FullPath == dir.FullPath) ?? new Directory
-                            {
-                                DirectoryName = dir.DirectoryName,
-                                LastModifiedDateTime = dir.LastModifiedDateTime,
-                                ParentDirectory = dir.ParentDirectory
-                            };
-
-                foreach (var file in dir.Files)
+                _dbContext.Add(new ModificationEntry
                 {
-                    
-                }
-
+                    File = file,
+                    ModificationDateTime = file.LastModifiedDateTime
+                });
+                _dbContext.Add(file);
             }
+            _dbContext.AddRange(directories);
             await _dbContext.SaveChangesAsync();
         }
     }

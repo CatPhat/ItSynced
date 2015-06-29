@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
 using ItSynced.Web.Helpers;
 using Directory = ItSynced.Web.DAL.Entities.Directory;
 using File = ItSynced.Web.DAL.Entities.File;
@@ -13,7 +14,11 @@ namespace ItSynced.Web.DAL.LocalsystemCrawler
         {
            
             var directories = new List<Directory>();
-            var systemDirectories = new Crawler().Get(path);
+            var systemDirectories = new Crawler().GetAndSetParentDirectory(path, new Directory
+            {
+                DirectoryName = "ROOT",
+                FullPath = ""
+            });
             foreach (var directory in systemDirectories.Flatten(x => x.Directories))
             {
                 directories.Add(directory);
@@ -30,23 +35,37 @@ namespace ItSynced.Web.DAL.LocalsystemCrawler
         {
             var directoriesToReturn = new List<Directory>();
             var directories = new DirectoryInfo(directoryPath).GetDirectories();
-            foreach (var directory in directories)
+            foreach (var systemDirectory in directories)
             {
-                directoriesToReturn.Add(new Directory
+                var newDirectory = new Directory
                 {
-                    Directories = Get(directory.FullName),
-                    DirectoryName = directory.Name,
-                    Files = directory.GetFiles().Select(x => new File
+                    DirectoryName = systemDirectory.Name,
+                    FullPath = systemDirectory.FullName,
+                    Files = systemDirectory.GetFiles().Select(x => new File
                     {
                         FileName = x.Name,
                         LastModifiedDateTime = x.LastAccessTime,
-                        DirectoryPath = x.DirectoryName
-                        
+                        FullPath = x.FullName
+
                     }).ToList()
-                });
+                };
+                newDirectory.Directories = GetAndSetParentDirectory(newDirectory.FullPath, newDirectory);
+                directoriesToReturn.Add(newDirectory);
             }
 
             return directoriesToReturn;
+        }
+
+        public List<Directory> GetAndSetParentDirectory(string directoryPath, Directory parentDirectory)
+        {
+            var directories = Get(directoryPath);
+            foreach (var directory in directories)
+            {
+                directory.ParentDirectory = parentDirectory;
+            }
+
+            return directories;
+            
         }
     }
 }

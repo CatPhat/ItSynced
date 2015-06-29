@@ -5,7 +5,7 @@
 
    "Data": {
     "DefaultConnection": {
-      "ConnectionString": "Server=GANESH\\MDEVSQLSERVER;Database=ItSyncedDatabase;Trusted_Connection=False;User ID=devuser;password=password123"
+      "ConnectionString": "Server=SHIVA9;Database=ItSyncedDatabase;Trusted_Connection=True;"
     }
   },
   "EntityFramework": {

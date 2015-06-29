@@ -20,6 +20,8 @@
     "Kestrel": "1.0.0-beta4",
     "EntityFramework.InMemory": "7.0.0-beta4",
     "EntityFramework.SqlServer": "7.0.0-beta4"
+
+
    
   
 
